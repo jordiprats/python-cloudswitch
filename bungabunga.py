@@ -58,6 +58,6 @@ if __name__ == "__main__":
                 for instance in reservation["Instances"]:
                     if instance['State']['Name'] == 'running':
                         stopInstance(instance["InstanceId"])
-#    elif action == 'stop':
+#    elif action == 'start':
     else:
         showJelp(action+' is NOT currently implemented')
