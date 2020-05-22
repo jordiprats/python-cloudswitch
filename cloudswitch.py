@@ -1,10 +1,11 @@
+from __future__ import print_function
+
 import sys
 import boto3
 import getopt
 
 def eprint(*args, **kwargs):
-    ''' print to stderr'''
-    print(*args, file=sys.stderr, **kwargs)
+    #print(*args, file=sys.stderr, **kwargs)
 
 def showJelp(msg):
     print("Usage: "+sys.argv[0])
