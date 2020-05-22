@@ -62,7 +62,7 @@ if __name__ == "__main__":
                 instance_filtering = True
                 filter = {}
                 filter['Name'] = 'tag:'+arg.split(':')[0]
-                filter['Values'] = arg.split(':')[1]
+                filter['Values'] = [ arg.split(':')[1] ]
 
                 instance_filter.append(filter)
             except Exception as e:
