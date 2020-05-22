@@ -35,9 +35,10 @@ def getRegions():
 if __name__ == "__main__":
 
     action = 'noop'
-    tag = False
+    instance_filtering = False
     regions = []
     custom_regionset = False
+    instance_filter = []
 
     # parse opts
     try:
@@ -58,11 +59,14 @@ if __name__ == "__main__":
             action = 'stop'
         elif opt in ('-t', '--tag'):
             try:
-                tag_name = arg.split(':')[0]
-                tag_value = arg.split(':')[1]
-            except:
-                showJelp("invalid tag")
-            tag = True
+                instance_filtering = True
+                filter = {}
+                filter['Name'] = 'tag:'+arg.split(':')[0]
+                filter['Values'] = arg.split(':')[1]
+
+                instance_filter.append(filter)
+            except Exception as e:
+                showJelp("invalid tag: "+arg+' ('+str(e)+')')
         elif opt in ('-r', '--region'):
             regions.append(arg)
             custom_regionset = True
@@ -78,15 +82,8 @@ if __name__ == "__main__":
     for region in regions:
         print("== "+region+" ==")
         ec2 = boto3.client('ec2',region_name=region)
-        if tag:
-            response = ec2.describe_instances(
-                                                Filters=[
-                                                        {
-                                                            'Name': 'tag:'+tag_name,
-                                                            'Values': [tag_value]
-                                                    }
-                                                ]
-                                            )
+        if instance_filtering:
+            response = ec2.describe_instances(instance_filter)
         else:
             response = ec2.describe_instances()
         for reservation in response["Reservations"]:
