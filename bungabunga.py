@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
     # parse opts
     try:
-        options, remainder = getopt.getopt(sys.argv[1:], 'UDtrh', [
+        options, remainder = getopt.getopt(sys.argv[1:], 'UDt:r:h', [
                                                                     'start',
                                                                     "stop",
                                                                     "tag",
@@ -94,7 +94,7 @@ if __name__ == "__main__":
                 if action == 'stop':
                     if instance['State']['Name'] == 'running':
                         stopInstance(instance["InstanceId"])
-                elif action == 'stop':
+                elif action == 'start':
                     if instance['State']['Name'] == 'stopped':
                         startInstance(instance["InstanceId"])
                 else:
