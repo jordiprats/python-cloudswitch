@@ -39,14 +39,16 @@ if __name__ == "__main__":
     regions = []
     custom_regionset = False
     instance_filter = []
+    verbose = False
 
     # parse opts
     try:
-        options, remainder = getopt.getopt(sys.argv[1:], 'UDt:r:h', [
+        options, remainder = getopt.getopt(sys.argv[1:], 'UDt:r:vh', [
                                                                     'start',
                                                                     "stop",
                                                                     "tag",
                                                                     "region",
+                                                                    "verbose",
                                                                     'help'
                                                                  ])
     except Exception, e:
@@ -70,6 +72,8 @@ if __name__ == "__main__":
         elif opt in ('-r', '--region'):
             regions.append(arg)
             custom_regionset = True
+        elif opt in ('-v', '--verbose'):
+            verbose = True
         else:
             showJelp("")
 
@@ -79,8 +83,13 @@ if __name__ == "__main__":
     if not custom_regionset:
         regions = getRegions()
     
+    if verbose:
+        print('regions: '+str(regions))
+        print('filter: '+str(instance_filter))
+
     for region in regions:
-        print("== "+region+" ==")
+        if verbose:
+            print("== "+region+" ==")
         ec2 = boto3.client('ec2',region_name=region)
         if instance_filtering:
             response = ec2.describe_instances(Filters=instance_filter)
