@@ -6,8 +6,10 @@ cloud instance manager
 Usage: cloudswitch
    [-U|--start]
    [-D|--stop]
-   [-r|--region]
+   [-L|--list]
+   [-r|--region] <region>
    [-t|--tag] <name:value>
+   [-v|--verbose]
 ``` 
 
 ## start all stopped instances
@@ -44,4 +46,16 @@ Multiple regions are also accepted:
 
 ```
 python cloudswitch.py -U -r eu-north-1 -r eu-south-1 -r eu-picamoixons-3
+```
+
+## list instances on a particular region
+
+```
+python cloudswitch.py -L -r eu-west-1
+```
+
+## list instances using a particular tag
+
+```
+python cloudswitch.py -L -r postgres:master
 ```

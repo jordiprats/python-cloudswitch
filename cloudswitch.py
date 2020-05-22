@@ -2,10 +2,15 @@ import sys
 import boto3
 import getopt
 
+def eprint(*args, **kwargs):
+    ''' print to stderr'''
+    print(*args, file=sys.stderr, **kwargs)
+
 def showJelp(msg):
     print("Usage: "+sys.argv[0])
     print("   [-U|--start]")
     print("   [-D|--stop]")
+    print("   [-L|--list]")
     print("   [-r|--region] <region>")
     print("   [-t|--tag] <name:value>")
     print("   [-v|--verbose]")
@@ -44,9 +49,10 @@ if __name__ == "__main__":
 
     # parse opts
     try:
-        options, remainder = getopt.getopt(sys.argv[1:], 'UDt:r:vh', [
+        options, remainder = getopt.getopt(sys.argv[1:], 'UDLt:r:vh', [
                                                                     'start',
                                                                     "stop",
+                                                                    "list",
                                                                     "tag",
                                                                     "region",
                                                                     "verbose",
@@ -60,6 +66,8 @@ if __name__ == "__main__":
             action = 'start'
         elif opt in ('-D', '--stop'):
             action = 'stop'
+        elif opt in ('-L', '--list'):
+            action = 'list'
         elif opt in ('-t', '--tag'):
             try:
                 instance_filtering = True
@@ -85,12 +93,12 @@ if __name__ == "__main__":
         regions = getRegions()
     
     if verbose:
-        print('regions: '+str(regions))
-        print('filter: '+str(instance_filter))
+        eprint('regions: '+str(regions))
+        eprint('filter: '+str(instance_filter))
 
     for region in regions:
         if verbose:
-            print("== "+region+" ==")
+            eprint("== "+region+" ==")
         ec2 = boto3.client('ec2',region_name=region)
         if instance_filtering:
             response = ec2.describe_instances(Filters=instance_filter)
@@ -99,12 +107,14 @@ if __name__ == "__main__":
         for reservation in response["Reservations"]:
             for instance in reservation["Instances"]:
                 if verbose:
-                    print(str(instance['PublicDnsName']+' '+instance['State']['Name']+' ACTION: '+action))
+                    eprint(instance['PublicDnsName']+' '+instance['State']['Name']+' ACTION: '+action)
                 if action == 'stop':
                     if instance['State']['Name'] == 'running':
                         stopInstance(instance["InstanceId"])
                 elif action == 'start':
                     if instance['State']['Name'] == 'stopped':
                         startInstance(instance["InstanceId"])
+                elif action == 'list':
+                    print(instance['PublicDnsName']+': '+instance['State']['Name'])
                 else:
                     showJelp(action+' is NOT currently implemented')
