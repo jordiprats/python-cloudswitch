@@ -83,7 +83,7 @@ if __name__ == "__main__":
         print("== "+region+" ==")
         ec2 = boto3.client('ec2',region_name=region)
         if instance_filtering:
-            response = ec2.describe_instances(instance_filter)
+            response = ec2.describe_instances(Filters=instance_filter)
         else:
             response = ec2.describe_instances()
         for reservation in response["Reservations"]:
