@@ -6,8 +6,9 @@ def showJelp(msg):
     print("Usage: "+sys.argv[0])
     print("   [-U|--start]")
     print("   [-D|--stop]")
-    print("   [-r|--region]")
+    print("   [-r|--region] <region>")
     print("   [-t|--tag] <name:value>")
+    print("   [-v|--verbose]")
     print("")
     sys.exit(msg)
 
