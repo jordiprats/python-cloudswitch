@@ -98,6 +98,8 @@ if __name__ == "__main__":
             response = ec2.describe_instances()
         for reservation in response["Reservations"]:
             for instance in reservation["Instances"]:
+                if verbose:
+                    print(str(instance['PublicDnsName']+' '+instance['State']['Name']+' ACTION: '+action))
                 if action == 'stop':
                     if instance['State']['Name'] == 'running':
                         stopInstance(instance["InstanceId"])
