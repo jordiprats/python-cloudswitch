@@ -15,47 +15,47 @@ Usage: cloudswitch
 ## start all stopped instances
 
 ```
-python cloudswitch.py -U
+cloudswitch -U
 ```
 
 ## stop all running instances
 
 ```
-python cloudswitch.py -D
+cloudswitch -D
 ```
 
 ## start by tag
 
 ```
-python cloudswitch.py -U -t tagname:tagvalue
+cloudswitch -U -t tagname:tagvalue
 ```
 
 Multiple tags:
 
 ```
-python cloudswitch.py -U -t postgres:master -t postgres:replica
+cloudswitch -U -t postgres:master -t postgres:replica
 ```
 
 ## start by region
 
 ```
-python cloudswitch.py -U -r eu-north-1
+cloudswitch -U -r eu-north-1
 ```
 
 Multiple regions are also accepted:
 
 ```
-python cloudswitch.py -U -r eu-north-1 -r eu-south-1 -r eu-picamoixons-3
+cloudswitch -U -r eu-north-1 -r eu-south-1 -r eu-picamoixons-3
 ```
 
 ## list instances on a particular region
 
 ```
-python cloudswitch.py -L -r eu-west-1
+cloudswitch -L -r eu-west-1
 ```
 
 ## list instances using a particular tag
 
 ```
-python cloudswitch.py -L -r postgres:master
+cloudswitch -L -r postgres:master
 ```

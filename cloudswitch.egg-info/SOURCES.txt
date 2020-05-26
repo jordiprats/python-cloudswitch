@@ -1,0 +1,9 @@
+MANIFEST.in
+README.md
+cloudswitch
+setup.py
+cloudswitch.egg-info/PKG-INFO
+cloudswitch.egg-info/SOURCES.txt
+cloudswitch.egg-info/dependency_links.txt
+cloudswitch.egg-info/requires.txt
+cloudswitch.egg-info/top_level.txt
